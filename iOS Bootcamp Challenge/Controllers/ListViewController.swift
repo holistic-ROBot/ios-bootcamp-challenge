@@ -8,7 +8,7 @@
 import UIKit
 import SVProgressHUD
 
-class ListViewController: UICollectionViewController {
+class ListViewController: UICollectionViewController, UISearchResultsUpdating{
 
     private var pokemons: [Pokemon] = []
     private var resultPokemons: [Pokemon] = []
@@ -34,6 +34,10 @@ class ListViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
         setup()
         setupUI()
     }
@@ -87,7 +91,13 @@ class ListViewController: UICollectionViewController {
         collectionView.reloadData()
     }
 
-    // TODO: Implement the SearchBar
+    // TODO: Implement the SearchBar - DONE!
+    
+    func updateSearchResults(for searchController: UISearchController){
+        guard let text = searchController.searchBar.text else{ return }
+        filterContentForSearchText(text)
+    }
+    
 
     // MARK: - UICollectionViewDataSource
 
