@@ -12,6 +12,7 @@ class ListViewController: UICollectionViewController {
 
     private var pokemons: [Pokemon] = []
     private var resultPokemons: [Pokemon] = []
+    private var clickedPkmn: Pokemon?
 
     // TODO: Use UserDefaults to pre-load the latest search at start
 
@@ -104,7 +105,18 @@ class ListViewController: UICollectionViewController {
 
     // MARK: - Navigation
 
-    // TODO: Handle navigation to detail view controller
+    // TODO: Handle navigation to detail view controller - DONE!
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        self.clickedPkmn = resultPokemons[indexPath.item]
+        return true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goDetailViewControllerSegue"{
+            let destinationVC = segue.destination as! DetailViewController
+            destinationVC.pokemon = clickedPkmn
+        }
+    }
 
     // MARK: - UI Hooks
 
