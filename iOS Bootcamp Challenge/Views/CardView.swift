@@ -19,6 +19,16 @@ class CardView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    lazy var stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 30
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.alignment = .fill
+        stack.distribution = .fillEqually
+        return stack
+    }()
 
     required init(card: Card) {
         self.card = card
@@ -36,7 +46,9 @@ class CardView: UIView {
     private func setup() {
         guard let card = card else { return }
 
-        card.items.forEach { _ in }
+        card.items.forEach { item in
+            stackView.addArrangedSubview(ItemView(item: item))
+        }
 
         titleLabel.text = card.title
         backgroundColor = .white
@@ -50,6 +62,9 @@ class CardView: UIView {
         titleLabel.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor, multiplier: 0.70).isActive = true
 
         // TODO: Display pokemon info (eg. types, abilities)
+        addSubview(stackView)
+        stackView.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: margin).isActive = true
+        stackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: margin).isActive = true
     }
 
 }
