@@ -27,19 +27,27 @@ class ListViewController: UICollectionViewController, UISearchResultsUpdating{
 
     private var isFirstLauch: Bool = true
 
-    // TODO: Add a loading indicator when the app first launches and has no pokemons
+    // TODO: Add a loading indicator when the app first launches and has no pokemons - DONE!
 
     private var shouldShowLoader: Bool = true
+    private let myActivityIndicator = UIActivityIndicatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        myActivityIndicator.center = view.center
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
+        
+        myActivityIndicator.hidesWhenStopped = false
+        myActivityIndicator.startAnimating()
+        
         setup()
         setupUI()
+        
+        view.addSubview(myActivityIndicator)
     }
 
     // MARK: Setup
@@ -110,6 +118,8 @@ class ListViewController: UICollectionViewController, UISearchResultsUpdating{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokeCell.identifier, for: indexPath) as? PokeCell
         else { preconditionFailure("Failed to load collection view cell") }
         cell.pokemon = resultPokemons[indexPath.item]
+        myActivityIndicator.stopAnimating()
+        myActivityIndicator.hidesWhenStopped = true
         return cell
     }
 
