@@ -113,7 +113,7 @@ class ListViewController: UICollectionViewController {
 
         var pokemons: [Pokemon] = []
 
-        // TODO: Wait for all requests to finish before updating the collection view
+        // TODO: Wait for all requests to finish before updating the collection view - DONE!
 
         PokeAPI.shared.get(url: "pokemon?limit=30", onCompletion: { (list: PokemonList?, _) in
             guard let list = list else { return }
@@ -122,7 +122,9 @@ class ListViewController: UICollectionViewController {
                     guard let pokemon = pokemon else { return }
                     pokemons.append(pokemon)
                     self.pokemons = pokemons
+                    if self.pokemons.count == list.results.count {
                     self.didRefresh()
+                    }
                 })
             }
         })
