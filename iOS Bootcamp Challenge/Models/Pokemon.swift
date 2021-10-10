@@ -64,8 +64,13 @@ struct Pokemon: Decodable, Equatable {
 
         // TODO: Decode list of types & abilities
 
-        self.types = []
-        self.abilities = []
+        let ability = try container.decode([Abilities].self, forKey: .abilities)
+        let PkmnAbilities = ability.map{$0.ability.name}
+        let type = try container.decode([Types].self, forKey: .types)
+        let PkmnTypes = type.map{$0.type.name}
+    
+        self.types = PkmnTypes
+        self.abilities = PkmnAbilities
 
         self.weight = try container.decode(Float.self, forKey: .weight)
         self.baseExperience = try container.decode(Int.self, forKey: .baseExperience)
@@ -90,4 +95,22 @@ extension Pokemon {
         return types?[index].capitalized
     }
 
+}
+
+extension Pokemon{
+    struct Abilities: Decodable, Equatable{
+        let ability: PkmnAbility
+    }
+
+    struct PkmnAbility: Decodable, Equatable{
+        let name : String
+    }
+
+    struct Types: Decodable, Equatable{
+        let type: PkmnType
+    }
+
+    struct PkmnType: Decodable, Equatable{
+        let name : String
+    }
 }
