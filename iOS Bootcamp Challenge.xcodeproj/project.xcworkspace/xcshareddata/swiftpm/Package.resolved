@@ -9,6 +9,15 @@
           "revision": "8c65ddf756c633d01d9ae01092bf72f0c66dfc60",
           "version": "7.0.0"
         }
+      },
+      {
+        "package": "SVProgressHUD",
+        "repositoryURL": "https://github.com/epitonium/SVProgressHUD.git",
+        "state": {
+          "branch": "master",
+          "revision": "3580cb55f351d83f861f52362aa38305f663f88d",
+          "version": null
+        }
       }
     ]
   },
